@@ -1,0 +1,63 @@
+﻿<style>
+    .page-section {
+        margin-top: 20px;
+    }
+
+</style>
+
+<div ng-app="weather" ng-controller="homeController">
+
+    <h2>{{title}}</h2>
+
+    <div class="page-section">
+        <label>Country Name:</label>
+        <input type="text" ng-model="countryName" />
+        <button ng-click="getCities()">Get Cities</button>
+
+    </div>
+
+    <div class="page-section" ng-show="cities.length > 0">
+        <label>Select City:</label>
+        <select ng-model="selectedCity"
+                ng-options="item for item in cities"></select>
+
+        <button ng-click="getWeather()">Get Weather</button>
+    </div>
+
+    <div class="page-section" ng-show="resultData!== ''">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Wind</th>
+                    <th>Visibility</th>
+                    <th>Temperature</th>
+                    <th>Pressure</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{resultData.time| date: 'dd/MMMM/yyyy'}}</td>
+                    <td>{{resultData.wind}}</td>
+                    <td>{{resultData.visibility}}</td>
+                    <td>{{resultData.temperature}}</td>
+                    <td>{{resultData.pressure}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <br />
+    <br />
+    <div class="page-section" ng-show="resultData!== ''">
+        <hr />
+        <h5>The 2 webservices do not work, so the result is randomly generated. </h5>
+        <p>http://www.webservicex.net/globalweather.asmx?op=GetWeather</p>
+        <p>http://api.openweathermap.org/data/2.5/weather?q=London</p>
+    </div>
+</div>
+@section scripts {
+    <script src="~/ClientApp/app.js"></script>
+    <script src="~/ClientApp/weatherService.js"></script>
+    <script src="~/ClientApp/controller/homeController.js"></script>
+}
