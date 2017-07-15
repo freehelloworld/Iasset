@@ -58,6 +58,8 @@
             weatherService.getWeatherByCity(model)
                 .success(function (data) {   //when the call is successful
                     $scope.resultData = data;
+
+                    console.log($scope.resultData);
                 })
                 .error(function (error) {  //when the call failed
                     alert(error);
@@ -65,14 +67,6 @@
 
 
         }
-
-
-        onInit();
-
-        function onInit() {
-            
-        }
-
-        
+       
     }
 })(angular.module('weather'));

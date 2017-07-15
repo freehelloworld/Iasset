@@ -7,6 +7,7 @@ using System.Web.Http;
 using IsaasetTech.net.webservicex.www;
 using System.Xml;
 using IsaasetTech.Models;
+using System.Net.Http.Headers;
 
 namespace IsaasetTech.Controllers
 {

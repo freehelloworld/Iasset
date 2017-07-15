@@ -9,16 +9,7 @@
     angular.module('weather', ['ngRoute', 'ngAnimate']).config(config);
 
     function config($routeProvider, $httpProvider) {
-        //$routeProvider
-        //    .when('', // Home
-        //    {
-        //        templateUrl: VIEW_ROOT_PATH + '/home.html',
-        //        controller: 'homeController',
-        //        caseInsensitiveMatch: true
-        //    })
-
-            //add more router if needed
-
+        //use $routeProvider to do routing for SPA.
     }
 
 })();
