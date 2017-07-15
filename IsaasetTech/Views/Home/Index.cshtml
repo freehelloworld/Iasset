@@ -29,39 +29,26 @@
             <thead>
                 <tr>
                     <th>Time</th>
-                    <th>Wind</th>
-                    <th>Visibility</th>
+                    <th>Sky Condition</th>
                     <th>Temperature</th>
+                    <th>Wind Speed</th>
+                    <th>Visibility</th>
                     <th>Pressure</th>
+                    <th>Relative Humidity</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>{{resultData.time| date: 'dd/MMMM/yyyy'}}</td>
+                    <td>{{resultData.skyConditions}}</td>
+                    <td>{{resultData.temperature}}</td>
                     <td>{{resultData.wind}}</td>
                     <td>{{resultData.visibility}}</td>
-                    <td>{{resultData.temperature}}</td>
                     <td>{{resultData.pressure}}</td>
+                    <td>{{resultData.relativeHumidity}}</td>
                 </tr>
             </tbody>
         </table>
-    </div>
-    <br />
-    <br />
-    <br />
-    <div class="page-section" ng-show="resultData!== ''">
-        <hr />
-        <h5>The 2 webservices do not work, so the result is randomly generated. </h5>
-        <p>
-            <a href="http://www.webservicex.net/globalweather.asmx?op=GetWeather" target="_blank">
-                http://www.webservicex.net/globalweather.asmx?op=GetWeather
-            </a>
-        </p>
-        <p>
-            <a href="http://api.openweathermap.org/data/2.5/weather?q=London" target="_blank">
-                http://api.openweathermap.org/data/2.5/weather?q=London
-            </a>
-        </p>
     </div>
 </div>
 @section scripts {

@@ -8,6 +8,8 @@ using IsaasetTech.net.webservicex.www;
 using System.Xml;
 using IsaasetTech.Models;
 using System.Net.Http.Headers;
+using System.IO;
+using System.Text;
 
 namespace IsaasetTech.Controllers
 {
@@ -67,18 +69,26 @@ namespace IsaasetTech.Controllers
             string data = _service.GetWeather(model.CityName, model.CountryName);
 
             WeatherResult result = new WeatherResult();
-
-            Random rnd = new Random();
-
-            //get some random value.
+           
+            //get current weather from the url.
+            string strHTML = "";
+            WebClient myWebClient = new WebClient();
+            string url = "http://samples.openweathermap.org/data/2.5/weather?q=" + model.CityName + "&appid=b1b15e88fa797225412429c1c50c122a1";
+            Stream myStream = myWebClient.OpenRead(url);
+            StreamReader sr = new StreamReader(myStream, Encoding.Default);
+            strHTML = sr.ReadToEnd();
+            
+            //the response structure is to complicated, don't want to define C# model to parse it.
+            //just parse the string and find out what we need.
+            
             result.Time = DateTime.Now;
-            result.Wind = rnd.Next(1, 10);
-            result.Visibility = rnd.Next(0, 1);
-            result.SkyConditions = rnd.Next(1, 5);
-            result.Temperature = rnd.Next(-10, 40);
-            result.DewPoint = rnd.Next(10, 20);
-            result.RelativeHumidity = rnd.Next(0, 10);
-            result.Pressure = rnd.Next(50, 100);
+            result.SkyConditions = strHTML.Split(new string[] { "main\":\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[0];
+            result.Temperature = strHTML.Split(new string[] { "temp\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
+            result.Visibility = strHTML.Split(new string[] { "visibility\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
+            result.Wind = strHTML.Split(new string[] { "speed\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
+            result.DewPoint = strHTML.Split(new string[] { "main\":\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[0];
+            result.RelativeHumidity = strHTML.Split(new string[] { "humidity\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
+            result.Pressure = strHTML.Split(new string[] { "pressure\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
 
             return result;
         }

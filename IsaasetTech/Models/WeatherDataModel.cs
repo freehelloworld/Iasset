@@ -20,18 +20,41 @@ namespace IsaasetTech.Models
     {
         public DateTime Time { get; set; }
 
-        public int Wind { get; set; }
+        public string Wind { get; set; }
 
-        public int Visibility { get; set; }
+        public string Visibility { get; set; }
 
-        public int SkyConditions { get; set; }
+        public string SkyConditions { get; set; }
 
-        public int Temperature { get; set; }
+        public string Temperature { get; set; }
 
-        public int DewPoint { get; set; }
+        public string DewPoint { get; set; }
 
-        public int RelativeHumidity { get; set; }
+        public string RelativeHumidity { get; set; }
 
-        public int Pressure { get; set; }
+        public string Pressure { get; set; }
+    }
+
+    public class CurrentWeather
+    {
+        public string Coord { get; set; }
+
+        public string Sys { get; set; }
+
+        public string Weather { get; set; }
+
+        public string Base { get; set; }
+
+        public string Main { get; set; }
+
+        public string Wind { get; set; }
+
+        public string Clouds { get; set; }
+
+        public string Dt { get; set; }
+
+        public string Name { get; set; }
+
+        public string Cod { get; set; }
     }
 }
