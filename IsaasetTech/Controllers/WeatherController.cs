@@ -69,19 +69,30 @@ namespace IsaasetTech.Controllers
             string data = _service.GetWeather(model.CityName, model.CountryName);
 
             WeatherResult result = new WeatherResult();
-           
+
+            result.Time = DateTime.Now;
+            
             //get current weather from the url.
             string strHTML = "";
-            WebClient myWebClient = new WebClient();
-            string url = "http://samples.openweathermap.org/data/2.5/weather?q=" + model.CityName + "&appid=b1b15e88fa797225412429c1c50c122a1";
-            Stream myStream = myWebClient.OpenRead(url);
-            StreamReader sr = new StreamReader(myStream, Encoding.Default);
-            strHTML = sr.ReadToEnd();
+            using(WebClient weatherWebClient = new WebClient())
+            {
+                string url = "http://samples.openweathermap.org/data/2.5/weather?q=" + model.CityName + "&appid=b1b15e88fa797225412429c1c50c122a1";
+                Stream myStream = weatherWebClient.OpenRead(url);
+                StreamReader sr = new StreamReader(myStream, Encoding.Default);
+                strHTML = sr.ReadToEnd();
+            }
+            
+            //if getting data failed, return an empty object.
+            if(strHTML.Contains("error"))
+            {
+                result.IsSuccess = false;
+                return result;
+            }
             
             //the response structure is to complicated, don't want to define C# model to parse it.
             //just parse the string and find out what we need.
             
-            result.Time = DateTime.Now;
+            
             result.SkyConditions = strHTML.Split(new string[] { "main\":\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[0];
             result.Temperature = strHTML.Split(new string[] { "temp\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
             result.Visibility = strHTML.Split(new string[] { "visibility\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
@@ -89,7 +100,7 @@ namespace IsaasetTech.Controllers
             result.DewPoint = strHTML.Split(new string[] { "main\":\"" }, StringSplitOptions.RemoveEmptyEntries)[1].Split('\"')[0];
             result.RelativeHumidity = strHTML.Split(new string[] { "humidity\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
             result.Pressure = strHTML.Split(new string[] { "pressure\":" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(',')[0];
-
+            result.IsSuccess = true;
             return result;
         }
 

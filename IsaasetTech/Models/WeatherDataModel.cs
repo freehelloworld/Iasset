@@ -20,6 +20,8 @@ namespace IsaasetTech.Models
     {
         public DateTime Time { get; set; }
 
+        public bool IsSuccess { get; set; }
+
         public string Wind { get; set; }
 
         public string Visibility { get; set; }

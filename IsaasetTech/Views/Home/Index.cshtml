@@ -11,7 +11,7 @@
 
     <div class="page-section">
         <label>Country Name:</label>
-        <input type="text" ng-model="countryName" />
+        <input type="text" ng-model="countryName" ng-keyup="onEnterKeyUp($event)"/>
         <button ng-click="getCities()">Get Cities</button>
 
     </div>
@@ -24,8 +24,12 @@
         <button ng-click="getWeather()">Get Weather</button>
     </div>
 
+    <div class="page-section" ng-show="isLoading">
+        <h3>Getting Data, please wait.......</h3>
+    </div>
+
     <div class="page-section" ng-show="resultData!== ''">
-        <table class="table">
+        <table class="table" ng-show="resultData.isSuccess">
             <thead>
                 <tr>
                     <th>Time</th>
@@ -49,6 +53,8 @@
                 </tr>
             </tbody>
         </table>
+
+        <p ng-hide="resultData.isSuccess">Network error, no data got.</p>
     </div>
 </div>
 @section scripts {
